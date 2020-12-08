@@ -9,26 +9,43 @@ export default class App extends React.Component {
       displayEndDate: new Date()
     };
   }
+  decreaseDateFnc = () => {
+    const { displayStartDate, displayEndDate } = this.state;
+    var decreasedStartDate = new Date(
+      displayStartDate.setDate(displayStartDate.getDate() - 7)
+    );
+    var decreasedEndDate = new Date(
+      displayEndDate.setDate(displayEndDate.getDate() - 7)
+    );
+    this.setState({
+      dispalyStartDate: decreasedStartDate,
+      dispalyEndDate: decreasedEndDate
+    });
+  };
+  increaseDateFnc = () => {
+    const { displayStartDate, displayEndDate } = this.state;
+    var increaseStartDate = new Date(
+      displayStartDate.setDate(displayStartDate.getDate() + 7)
+    );
+    var increaseEndDate = new Date(
+      displayEndDate.setDate(displayEndDate.getDate() + 7)
+    );
+    this.setState({
+      dispalyStartDate: increaseStartDate,
+      dispalyEndDate: increaseEndDate
+    });
+  };
   onLoadDisplayDateFnc = () => {
     const currentDate = new Date("2020-12-31");
-    // console.log(currentDate.getDate());
     var first = currentDate.getDate() - currentDate.getDay();
-    // var last = first + 7;
     var last = currentDate.getDate() - currentDate.getDay() + 6;
     var firstday = new Date(currentDate.setDate(first));
-    // var lastday = new Date(currentDate.setDate(last)).toUTCString();
     var lastday = new Date(currentDate.setDate(last));
     console.log(firstday, lastday);
     this.setState({
       displayStartDate: firstday,
       displayEndDate: lastday
     });
-    // if (displayStartDate.getMonth() === displayEndDate.getMonth()) {
-    //   console.log("months are equal");
-    //   //   console.log(displayStartDate, displayEndDate);
-    // } else {
-    //   console.log("months are not equal");
-    // }
   };
   componentDidMount() {
     this.onLoadDisplayDateFnc();
@@ -38,10 +55,15 @@ export default class App extends React.Component {
     return (
       <div className="App">
         <h1>Date Function</h1>
-        <button>Dec</button>
-        <input value={displayStartDate}></input>
-        <input value={displayEndDate}></input>
-        <button>Inc</button>
+        <h4>The main intention is to find start and end date of the week</h4>
+        <p>
+          By clicking on "Dec" and "Inc" user can navigate to previous and next
+          week
+        </p>
+        <button onClick={this.decreaseDateFnc}>Dec</button>
+        <input value={displayStartDate} readOnly></input>
+        <input value={displayEndDate} readOnly></input>
+        <button onClick={this.increaseDateFnc}>Inc</button>
       </div>
     );
   }
